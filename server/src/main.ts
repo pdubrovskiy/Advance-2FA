@@ -19,6 +19,12 @@ async function bootstrap() {
     })
   );
 
-  await app.listen(process.env.PORT ?? 3000);
+  app.enableCors({
+    origin: config.getOrThrow<string>('ALLOWED_ORIGIN'),
+    credentials: true,
+    exposedHeaders: ['set-cookie'],
+  });
+
+  await app.listen(config.getOrThrow<number>('PORT'));
 }
 bootstrap();
