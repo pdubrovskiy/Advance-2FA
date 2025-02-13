@@ -1,0 +1,27 @@
+#!/bin/sh
+
+echo "Running pre-commit checks..."
+
+# Get staged files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=d | grep ".ts$")
+
+if [ -z "$STAGED_FILES" ]; then
+    exit 0
+fi
+
+# Run ESLint
+echo "Running ESLint..."
+yarn lint || {
+    echo "❌ ESLint check failed. Please fix the errors and try again."
+    exit 1
+}
+
+# Run Prettier
+echo "Running Prettier..."
+yarn format || {
+    echo "❌ Prettier check failed. Please fix the formatting and try again."
+    exit 1
+}
+
+echo "✅ Pre-commit checks passed!"
+exit 0 

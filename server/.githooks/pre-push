@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo "Running pre-push checks..."
+
+# Run tests
+echo "Running tests..."
+yarn test || {
+    echo "❌ Tests failed. Please fix the failing tests and try again."
+    exit 1
+}
+
+echo "✅ Pre-push checks passed!"
+exit 0 
