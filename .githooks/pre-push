@@ -1,0 +1,19 @@
+#!/bin/sh
+
+echo "Running pre-push checks..."
+
+# Change to the server directory
+cd server || {
+    echo "❌ Failed to change to server directory"
+    exit 1
+}
+
+# Run tests
+echo "Running tests..."
+yarn test --passWithNoTests || {
+    echo "❌ Tests failed. Please fix the failing tests and try again."
+    exit 1
+}
+
+echo "✅ Pre-push checks passed!"
+exit 0 
